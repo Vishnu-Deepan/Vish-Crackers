@@ -160,8 +160,23 @@ confirmEnquiryBtn.addEventListener("click", () => {
   const whatsappNumber = "919994376845";  // Replace with correct number
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-  // Open WhatsApp
-  window.open(whatsappURL, "_blank");
+  // Fallback email
+  const emailSubject = "Enquiry for Firecrackers";
+  const emailBody = encodeURIComponent(enquiryMessage);
+  const emailURL = `mailto:info@vishcrackers.com?subject=${emailSubject}&body=${emailBody}`; // Replace with correct email
+
+  // Try to open WhatsApp
+  const whatsappWindow = window.open(whatsappURL, "_blank");
+
+  // If WhatsApp window didn't open (i.e., it was blocked), attempt to open the email client
+  if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+    const emailWindow = window.open(emailURL, "_blank");
+
+    // If the email client also fails (i.e., both options fail), show a fallback message
+    if (!emailWindow || emailWindow.closed || typeof emailWindow.closed === 'undefined') {
+      alert("Both WhatsApp and Email options failed. Please contact us directly at info@vishcrackers.com.");
+    }
+  }
 
   // Reset cart and address data (optional, depending on requirements)
   cart = {};
@@ -170,6 +185,7 @@ confirmEnquiryBtn.addEventListener("click", () => {
   // Reset UI after enquiry (re-enable view cart button)
   resetUI();
 });
+
 
 // Render product categories
 productsData.forEach((cat, index) => {
