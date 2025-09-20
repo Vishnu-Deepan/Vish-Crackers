@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vishnu Crackers Enquiry</title>
+  <title>Vish Crackers Enquiry</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <header>
-    <h1>Vishnu Crackers</h1>
+    <h1>Vish Crackers</h1>
     <h3>Contact : Vishnu - 9994376845</h3>
     <p class="note">
       ⚠️ Online sale of firecrackers is <strong>not permitted</strong> (2018 Supreme Court Order).
@@ -68,8 +68,63 @@
   </div>
 </div>
 
+<!-- Hidden Google Form (Not visible to users) -->
+<form id="google-form" 
+      action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSe0ZaXWHcfR69l2T67ndBb8l3Qy1Ahf1N7NMD706vyZPJ7l3g/formResponse" 
+      method="POST" 
+      style="display: none;" 
+      onsubmit="return false;">  <!-- Prevent default form submission -->
+    <input type="text" name="entry.452695221" id="name-input" />
+    <input type="text" name="entry.944025910" id="address-input" />
+    <input type="text" name="entry.2048288889" id="products-input" />
+    <input type="text" name="entry.174664773" id="quantities-input" />
+    <input type="text" name="entry.1888919222" id="prices-input" />
+    <input type="text" name="entry.273267764" id="total-input" />
+    <input type="submit" id="submit-form" />
+</form>
+
+
   <script src="products.js"></script>
   <script src="script.js"></script>
+
+   <script>
+    // Collect data from the user and submit it to Google Forms
+    function collectAndSubmitData() {
+        // Gather form data from the webpage
+        const name = document.getElementById('name').value;
+        const address = document.getElementById('address').value;
+        const products = Object.keys(cart).map(item => `${item} (${cart[item].quantity})`).join(', ');
+        const quantities = Object.keys(cart).map(item => cart[item].quantity).join(', ');
+        const prices = Object.keys(cart).map(item => cart[item].price).join(', ');
+        const total = Object.keys(cart).reduce((sum, item) => sum + cart[item].price * cart[item].quantity, 0);
+
+        // Check if the required fields are filled out
+        if (!name || !address || !products || !quantities || !prices || !total) {
+            alert("Please ensure all fields are filled out before submitting.");
+            return;
+        }
+
+        // Populate the hidden form fields with the gathered data
+        document.getElementById('name-input').value = name;
+        document.getElementById('address-input').value = address;
+        document.getElementById('products-input').value = products;
+        document.getElementById('quantities-input').value = quantities;
+        document.getElementById('prices-input').value = prices;
+        document.getElementById('total-input').value = total;
+
+        // Submit the hidden Google Form using JavaScript without triggering the form's confirmation page
+        const googleForm = document.getElementById('google-form');
+        
+        // Submit the form in the background
+        googleForm.submit();
+
+        // Prevent the page from redirecting and show the success message
+        alert("Enquiry submitted successfully. We will contact you soon!");
+        }
+
+    // Attach the event listener to the "Send Enquiry" button
+    document.getElementById("confirm-enquiry-btn").addEventListener("click", collectAndSubmitData);
+  </script>
 
 </body>
 </html>

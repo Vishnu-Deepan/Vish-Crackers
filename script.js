@@ -9,6 +9,7 @@ const addressForm = document.getElementById("address-form");
 const addressModal = document.getElementById("address-modal");
 const cancelAddressBtn = document.getElementById("cancel-address-btn");
 
+
 let cart = {};
 let addressData = null;
 
@@ -196,41 +197,40 @@ addressForm.addEventListener("submit", (e) => {
   showConfirmEnquiryBtn();
 });
 
-// Confirm enquiry button sends WhatsApp message with cart + address
+// Confirm enquiry button generates a PDF receipt and downloads it
 confirmEnquiryBtn.addEventListener("click", () => {
   if (Object.keys(cart).length === 0) {
     alert("Cart is empty!");
     return;
   }
   if (!addressData) {
-    alert("Please add your address before sending enquiry.");
+    alert("Please add your address before generating the enquiry receipt.");
     return;
   }
 
-  // Build enquiry message
-  let enquiryMessage = `Enquiry from: ${addressData.name}\n`;
-  enquiryMessage += `Address: ${addressData.address}, ${addressData.city}, ${addressData.state} - ${addressData.pincode}\n\n`;
-  enquiryMessage += `Products Enquired:\n`;
+  // Build the PDF content
+  let pdfContent = `Enquiry from: ${addressData.name}\n`;
+  pdfContent += `Address: ${addressData.address}, ${addressData.city}, ${addressData.state} - ${addressData.pincode}\n\n`;
+  pdfContent += `Products Enquired:\n`;
 
   let grandTotal = 0;
   for (const key in cart) {
     const item = cart[key];
     const total = item.price * item.quantity;
     grandTotal += total;
-    enquiryMessage += `- ${item.name} (${item.unit}) x ${item.quantity} = ₹${total}\n`;
+    pdfContent += `- ${item.name} (${item.unit}) x ${item.quantity} = ₹${total}\n`;
   }
-  enquiryMessage += `\nGrand Total: ₹${grandTotal}`;
+  pdfContent += `\nGrand Total: ₹${grandTotal}`;
 
-  // Encode message for WhatsApp URL
-  const encodedMessage = encodeURIComponent(enquiryMessage);
+  // Create a new jsPDF document
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-  // WhatsApp number (India) without '+'
-  const whatsappNumber = "919994376845";
+  // Add the enquiry content to the PDF
+  doc.text(pdfContent, 10, 10);
 
-  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-  // Open WhatsApp chat
-  window.open(whatsappURL, "_blank");
+  // Save the PDF file automatically
+  doc.save('enquiry_receipt.pdf');
 
   // Reset state and UI
   cart = {};
@@ -240,6 +240,7 @@ confirmEnquiryBtn.addEventListener("click", () => {
   addressForm.reset();
   updateCartButton();
 });
+
 
 // Render cart summary table inside modal
 function renderCartSummary() {
