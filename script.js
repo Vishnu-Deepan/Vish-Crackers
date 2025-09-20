@@ -226,10 +226,14 @@ confirmEnquiryBtn.addEventListener("click", () => {
   const whatsappNumber = "919994376845";
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-  // Try to open WhatsApp in the same tab
-  location.href = whatsappURL;
+  // ✅ Create a real <a> element and click it (mobile-safe method)
+  const tempLink = document.createElement("a");
+  tempLink.href = whatsappURL;
+  tempLink.target = "_blank";
+  tempLink.rel = "noopener noreferrer";
+  tempLink.click();
 
-  // Fallback after delay
+  // 🟡 Optional fallback UI
   setTimeout(() => {
     if (document.hasFocus()) {
       const fallbackDiv = document.createElement("div");
@@ -249,7 +253,7 @@ confirmEnquiryBtn.addEventListener("click", () => {
         <br><br>
       `;
 
-      // Optional: Copy Message Button
+      // Copy button
       const copyBtn = document.createElement("button");
       copyBtn.textContent = "📋 Copy Message";
       copyBtn.style.marginTop = "0.5rem";
@@ -269,7 +273,7 @@ confirmEnquiryBtn.addEventListener("click", () => {
     }
   }, 1500);
 
-  // Reset state and UI
+  // ✅ Reset state and UI
   cart = {};
   addressData = null;
   cartModal.classList.add("hidden");
