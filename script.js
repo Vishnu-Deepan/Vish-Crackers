@@ -221,57 +221,12 @@ confirmEnquiryBtn.addEventListener("click", () => {
   }
   enquiryMessage += `\nGrand Total: ₹${grandTotal}`;
 
-  // Encode message for WhatsApp URL
   const encodedMessage = encodeURIComponent(enquiryMessage);
   const whatsappNumber = "919994376845";
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-  // ✅ Create a real <a> element and click it (mobile-safe method)
-  const tempLink = document.createElement("a");
-  tempLink.href = whatsappURL;
-  tempLink.target = "_blank";
-  tempLink.rel = "noopener noreferrer";
-  tempLink.click();
-
-  // 🟡 Optional fallback UI
-  setTimeout(() => {
-    if (document.hasFocus()) {
-      const fallbackDiv = document.createElement("div");
-      fallbackDiv.style.padding = "1rem";
-      fallbackDiv.style.backgroundColor = "#fff3cd";
-      fallbackDiv.style.color = "#856404";
-      fallbackDiv.style.border = "1px solid #ffeeba";
-      fallbackDiv.style.borderRadius = "4px";
-      fallbackDiv.style.marginTop = "1rem";
-      fallbackDiv.style.maxWidth = "500px";
-      fallbackDiv.style.fontSize = "14px";
-
-      fallbackDiv.innerHTML = `
-        <strong>WhatsApp didn't open?</strong><br>
-        Your browser may have blocked it. <br>
-        <a href="${whatsappURL}" target="_blank" style="color:#007bff;">👉 Click here to open WhatsApp manually</a>
-        <br><br>
-      `;
-
-      // Copy button
-      const copyBtn = document.createElement("button");
-      copyBtn.textContent = "📋 Copy Message";
-      copyBtn.style.marginTop = "0.5rem";
-      copyBtn.style.padding = "0.4rem 0.8rem";
-      copyBtn.style.border = "1px solid #ccc";
-      copyBtn.style.borderRadius = "4px";
-      copyBtn.style.backgroundColor = "#f8f9fa";
-      copyBtn.style.cursor = "pointer";
-
-      copyBtn.addEventListener("click", () => {
-        navigator.clipboard.writeText(decodeURIComponent(encodedMessage));
-        alert("Message copied. You can paste it in WhatsApp manually.");
-      });
-
-      fallbackDiv.appendChild(copyBtn);
-      document.body.appendChild(fallbackDiv);
-    }
-  }, 1500);
+  // ✅ Manual WhatsApp prompt (instead of auto redirect)
+  showWhatsappPrompt(whatsappURL, encodedMessage);
 
   // ✅ Reset state and UI
   cart = {};
@@ -281,6 +236,7 @@ confirmEnquiryBtn.addEventListener("click", () => {
   addressForm.reset();
   updateCartButton();
 });
+
 
 // Render cart summary table inside modal
 function renderCartSummary() {
@@ -340,4 +296,31 @@ function resetUI() {
 
   // Hide confirm enquiry button until address is added next time
   confirmEnquiryBtn.style.display = "none";
+}
+
+function showWhatsappPrompt(url, encodedMessage) {
+  const wrapper = document.createElement("div");
+  wrapper.style.border = "1px solid #ccc";
+  wrapper.style.padding = "1rem";
+  wrapper.style.margin = "1rem 0";
+  wrapper.style.borderRadius = "8px";
+  wrapper.style.backgroundColor = "#f1f1f1";
+  wrapper.style.maxWidth = "500px";
+
+  wrapper.innerHTML = `
+    <h3>📩 Enquiry Ready</h3>
+    <p>Your enquiry message is ready to send via WhatsApp.</p>
+    <a href="${url}" target="_blank" style="display:inline-block;padding:10px 20px;background-color:#25D366;color:white;border:none;border-radius:5px;text-decoration:none;font-weight:bold;margin-top:10px;">💬 Open WhatsApp</a>
+    <br><br>
+    <button id="copy-message-btn" style="padding: 8px 14px; background: #ddd; border: 1px solid #aaa; border-radius: 5px; cursor: pointer;">📋 Copy Message</button>
+    <p style="margin-top: 0.5rem; font-size: 0.9rem;">If WhatsApp doesn't open, you can paste the copied message manually in your chat.</p>
+  `;
+
+  // Append to modal or body
+  cartModal.appendChild(wrapper);
+
+  document.getElementById("copy-message-btn").addEventListener("click", () => {
+    navigator.clipboard.writeText(decodeURIComponent(encodedMessage));
+    alert("Message copied. You can paste it in WhatsApp manually.");
+  });
 }
