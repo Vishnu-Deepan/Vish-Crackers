@@ -223,14 +223,51 @@ confirmEnquiryBtn.addEventListener("click", () => {
 
   // Encode message for WhatsApp URL
   const encodedMessage = encodeURIComponent(enquiryMessage);
-
-  // WhatsApp number (India) without '+'
   const whatsappNumber = "919994376845";
-
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-  // Open WhatsApp chat
-  window.open(whatsappURL, "_blank");
+  // Try to open WhatsApp in the same tab
+  location.href = whatsappURL;
+
+  // Fallback after delay
+  setTimeout(() => {
+    if (document.hasFocus()) {
+      const fallbackDiv = document.createElement("div");
+      fallbackDiv.style.padding = "1rem";
+      fallbackDiv.style.backgroundColor = "#fff3cd";
+      fallbackDiv.style.color = "#856404";
+      fallbackDiv.style.border = "1px solid #ffeeba";
+      fallbackDiv.style.borderRadius = "4px";
+      fallbackDiv.style.marginTop = "1rem";
+      fallbackDiv.style.maxWidth = "500px";
+      fallbackDiv.style.fontSize = "14px";
+
+      fallbackDiv.innerHTML = `
+        <strong>WhatsApp didn't open?</strong><br>
+        Your browser may have blocked it. <br>
+        <a href="${whatsappURL}" target="_blank" style="color:#007bff;">👉 Click here to open WhatsApp manually</a>
+        <br><br>
+      `;
+
+      // Optional: Copy Message Button
+      const copyBtn = document.createElement("button");
+      copyBtn.textContent = "📋 Copy Message";
+      copyBtn.style.marginTop = "0.5rem";
+      copyBtn.style.padding = "0.4rem 0.8rem";
+      copyBtn.style.border = "1px solid #ccc";
+      copyBtn.style.borderRadius = "4px";
+      copyBtn.style.backgroundColor = "#f8f9fa";
+      copyBtn.style.cursor = "pointer";
+
+      copyBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(decodeURIComponent(encodedMessage));
+        alert("Message copied. You can paste it in WhatsApp manually.");
+      });
+
+      fallbackDiv.appendChild(copyBtn);
+      document.body.appendChild(fallbackDiv);
+    }
+  }, 1500);
 
   // Reset state and UI
   cart = {};
