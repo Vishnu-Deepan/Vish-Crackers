@@ -1,0 +1,240 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #eee;
+  min-height: 100vh;
+  padding: 1rem;
+  padding-bottom: 5rem; /* for bottom bar */
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+header h1 {
+  color: #ff6f00;
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+.note {
+  background: #2a2a2a;
+  color: #ffcc00;
+  border-left: 5px solid #ff6f00;
+  padding: 1rem;
+  margin-top: 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* CATEGORY */
+.category {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #333;
+}
+.category-header {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #ff8f00;
+  padding: 0.6rem 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.category-header:hover {
+  color: #ffa726;
+}
+.category-header .toggle-icon {
+  font-size: 1.5rem;
+}
+
+/* PRODUCTS TABLE */
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.8rem;
+}
+.product-table th,
+.product-table td {
+  text-align: left;
+  padding: 0.6rem 0.4rem;
+  border-bottom: 1px solid #333;
+  font-size: 0.9rem;
+}
+.product-table th {
+  color: #ff8f00;
+  font-weight: 600;
+  border-bottom: 2px solid #ff6f00;
+}
+
+/* checkbox & quantity */
+input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #ff6f00;
+}
+input[type="number"] {
+  width: 50px;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #eee;
+  font-weight: 600;
+  text-align: center;
+  display: none;
+}
+
+/* Show qty input if active */
+input[type="number"].visible {
+  display: inline-block;
+}
+
+/* BOTTOM FIXED BAR */
+#bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #1f1f1f;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 -2px 6px rgba(255,111,0,0.7);
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+}
+#view-cart-btn {
+  background: #ff6f00;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+#view-cart-btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+#view-cart-btn:not(:disabled):hover {
+  background: #ff8f00;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  background: #222;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: #eee;
+}
+.modal-content h2 {
+  margin-bottom: 1rem;
+  color: #ff6f00;
+}
+.modal-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.modal-actions button {
+  padding: 0.7rem 1.5rem;
+  border-radius: 30px;
+  border: none;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.modal-actions button.primary {
+  background-color: #ff6f00;
+  color: white;
+}
+.modal-actions button:not(.primary) {
+  background-color: #555;
+  color: #ccc;
+}
+
+/* CART SUMMARY TABLE */
+#cart-summary table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+#cart-summary th,
+#cart-summary td {
+  padding: 0.5rem 0.3rem;
+  border-bottom: 1px solid #333;
+  text-align: left;
+}
+#cart-summary th {
+  color: #ff8f00;
+  font-weight: 700;
+}
+
+#address-section {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #eee;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#address-section h2 {
+  color: #ff6f00;
+  margin-bottom: 0.8rem;
+}
+#address-form div {
+  margin-bottom: 0.8rem;
+}
+#address-form label {
+  font-weight: 600;
+}
+#address-form input,
+#address-form textarea {
+  width: 100%;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #eee;
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  font-family: inherit;
+}
+#address-form input:focus,
+#address-form textarea:focus {
+  outline: none;
+  border-color: #ff6f00;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sri Crackers Enquiry</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Sri Crackers</h1>
+    <h3>Contact : Vishnu - 9994376845</h3>
+    <p class="note">
+      ⚠️ Online sale of firecrackers is <strong>not permitted</strong> (2018 Supreme Court Order).
+      You can enquire products and we’ll contact you within 24 hrs.
+    </p>
+  </header>
+
+  <main id="product-container"></main>
+
+  <section id="address-section">
+    <h2>Your Address</h2>
+        <form id="address-form">
+            <div>
+            <label for="name">Name*</label><br />
+            <input type="text" id="name" name="name" required />
+            </div>
+            <div>
+            <label for="address">Address*</label><br />
+            <textarea id="address" name="address" rows="3" required></textarea>
+            </div>
+            <div>
+            <label for="city">City*</label><br />
+            <input type="text" id="city" name="city" required />
+            </div>
+            <div>
+            <label for="state">State*</label><br />
+            <input type="text" id="state" name="state" required />
+            </div>
+            <div>
+            <label for="pincode">Pincode*</label><br />
+            <input type="text" id="pincode" name="pincode" pattern="\d{6}" required title="6 digit pincode" />
+            </div>
+        </form>
+    </section>
+
+  <div id="bottom-bar">
+    <button id="view-cart-btn" disabled>View Cart &amp; Send Enquiry</button>
+  </div>
+
+  <!-- Cart Summary Modal -->
+  <div id="cart-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Your Cart Summary</h2>
+      <div id="cart-summary"></div>
+      <div class="modal-actions">
+        <button id="close-cart-btn">Close</button>
+        <button id="confirm-enquiry-btn" class="primary">Send Enquiry</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
