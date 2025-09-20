@@ -18,6 +18,90 @@ function updateCartButton() {
   viewCartBtn.disabled = !hasItems;
 }
 
+// Render cart summary inside modal
+function renderCartSummary() {
+  if (Object.keys(cart).length === 0) {
+    cartSummary.innerHTML = "<p>Your cart is empty.</p>";
+    return;
+  }
+
+  let html = `<table>
+    <thead>
+      <tr><th>Product</th><th>Unit</th><th>Price (₹)</th><th>Qty</th><th>Total (₹)</th></tr>
+    </thead>
+    <tbody>`;
+
+  let grandTotal = 0;
+  for (const key in cart) {
+    const item = cart[key];
+    const total = item.price * item.quantity;
+    grandTotal += total;
+
+    html += `
+      <tr>
+        <td>${item.name}</td>
+        <td>${item.unit}</td>
+        <td>${item.price}</td>
+        <td>${item.quantity}</td>
+        <td>${total}</td>
+      </tr>`;
+  }
+
+  html += `
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4" style="text-align:right;">Grand Total:</th>
+        <th>₹${grandTotal}</th>
+      </tr>
+    </tfoot>
+  </table>`;
+
+  cartSummary.innerHTML = html;
+}
+
+// Show Cart modal with summary and show Add Address button initially
+viewCartBtn.addEventListener("click", () => {
+  if (Object.keys(cart).length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+  renderCartSummary();
+  cartModal.classList.remove("hidden");
+  showAddAddressBtn(); // This ensures Add Address button appears
+});
+
+// Close Cart modal
+closeCartBtn.addEventListener("click", () => {
+  cartModal.classList.add("hidden");
+});
+
+// Cancel Address modal
+cancelAddressBtn.addEventListener("click", () => {
+  addressModal.classList.add("hidden");
+  cartModal.classList.remove("hidden");
+});
+
+// Address form submit: save address data, close modal, show Send Enquiry button
+addressForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (!addressForm.reportValidity()) return;
+
+  const formData = new FormData(addressForm);
+  addressData = {
+    name: formData.get("name").trim(),
+    address: formData.get("address").trim(),
+    city: formData.get("city").trim(),
+    state: formData.get("state").trim(),
+    pincode: formData.get("pincode").trim(),
+  };
+
+  addressModal.classList.add("hidden");
+  cartModal.classList.remove("hidden");
+  showConfirmEnquiryBtn();
+});
+
 // Show Add Address button, hide Send Enquiry button
 function showAddAddressBtn() {
   confirmEnquiryBtn.style.display = "none";
@@ -46,7 +130,48 @@ function showConfirmEnquiryBtn() {
   if (addAddressBtn) addAddressBtn.style.display = "none";
 }
 
-// Render all categories and products
+// Confirm enquiry button sends WhatsApp message with cart + address
+confirmEnquiryBtn.addEventListener("click", () => {
+  if (Object.keys(cart).length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+  if (!addressData) {
+    alert("Please add your address before sending enquiry.");
+    return;
+  }
+
+  // Build enquiry message
+  let enquiryMessage = `Enquiry from: ${addressData.name}\n`;
+  enquiryMessage += `Address: ${addressData.address}, ${addressData.city}, ${addressData.state} - ${addressData.pincode}\n\n`;
+  enquiryMessage += `Products Enquired:\n`;
+
+  let grandTotal = 0;
+  for (const key in cart) {
+    const item = cart[key];
+    const total = item.price * item.quantity;
+    grandTotal += total;
+    enquiryMessage += `- ${item.name} (${item.unit}) x ${item.quantity} = ₹${total}\n`;
+  }
+  enquiryMessage += `\nGrand Total: ₹${grandTotal}`;
+
+  // Encode message for WhatsApp URL
+  const encodedMessage = encodeURIComponent(enquiryMessage);
+  const whatsappNumber = "919994376845";  // Replace with correct number
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+  // Open WhatsApp
+  window.open(whatsappURL, "_blank");
+
+  // Reset cart and address data (optional, depending on requirements)
+  cart = {};
+  addressData = null;
+  
+  // Reset UI after enquiry (re-enable view cart button)
+  resetUI();
+});
+
+// Render product categories
 productsData.forEach((cat, index) => {
   const categoryDiv = document.createElement("div");
   categoryDiv.className = "category";
@@ -126,9 +251,8 @@ productsData.forEach((cat, index) => {
     qtyInput.addEventListener("input", () => {
       if (checkbox.checked) {
         let val = parseInt(qtyInput.value, 10);
-        if (isNaN(val) || val < 1) {
-          val = 1;
-          qtyInput.value = val;
+        if (isNaN(val) || val <= 0) {
+          qtyInput.value = 1;
         }
         cart[item.name].quantity = val;
       }
@@ -137,15 +261,12 @@ productsData.forEach((cat, index) => {
     tbody.appendChild(row);
   });
 
-  // Toggle show/hide products on header click
+  // Category toggle
   header.addEventListener("click", () => {
-    if (table.style.display === "none") {
-      table.style.display = "table";
-      header.querySelector(".toggle-icon").textContent = "−";
-    } else {
-      table.style.display = "none";
-      header.querySelector(".toggle-icon").textContent = "+";
-    }
+    const toggleIcon = header.querySelector(".toggle-icon");
+    const isVisible = table.style.display === "table";
+    toggleIcon.textContent = isVisible ? "+" : "-";
+    table.style.display = isVisible ? "none" : "table";
   });
 
   categoryDiv.appendChild(header);
@@ -153,174 +274,12 @@ productsData.forEach((cat, index) => {
   container.appendChild(categoryDiv);
 });
 
-// Show Cart modal with summary and show Add Address button initially
-viewCartBtn.addEventListener("click", () => {
-  if (Object.keys(cart).length === 0) {
-    alert("Cart is empty!");
-    return;
-  }
-  renderCartSummary();
-  cartModal.classList.remove("hidden");
-  showAddAddressBtn();
-});
-
-// Close Cart modal
-closeCartBtn.addEventListener("click", () => {
-  cartModal.classList.add("hidden");
-});
-
-// Cancel Address modal
-cancelAddressBtn.addEventListener("click", () => {
-  addressModal.classList.add("hidden");
-  cartModal.classList.remove("hidden");
-});
-
-// Address form submit: save address data, close modal, show Send Enquiry button
-addressForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  // Validate form (HTML5 validation should handle this)
-  if (!addressForm.reportValidity()) return;
-
-  const formData = new FormData(addressForm);
-  addressData = {
-    name: formData.get("name").trim(),
-    address: formData.get("address").trim(),
-    city: formData.get("city").trim(),
-    state: formData.get("state").trim(),
-    pincode: formData.get("pincode").trim(),
-  };
-
-  addressModal.classList.add("hidden");
-  cartModal.classList.remove("hidden");
-  showConfirmEnquiryBtn();
-});
-
-// Confirm enquiry button sends WhatsApp message with cart + address
-confirmEnquiryBtn.addEventListener("click", () => {
-  if (Object.keys(cart).length === 0) {
-    alert("Cart is empty!");
-    return;
-  }
-  if (!addressData) {
-    alert("Please add your address before sending enquiry.");
-    return;
-  }
-
-  // Build enquiry message
-  let enquiryMessage = `Enquiry from: ${addressData.name}\n`;
-  enquiryMessage += `Address: ${addressData.address}, ${addressData.city}, ${addressData.state} - ${addressData.pincode}\n\n`;
-  enquiryMessage += `Products Enquired:\n`;
-
-  let grandTotal = 0;
-  for (const key in cart) {
-    const item = cart[key];
-    const total = item.price * item.quantity;
-    grandTotal += total;
-    enquiryMessage += `- ${item.name} (${item.unit}) x ${item.quantity} = ₹${total}\n`;
-  }
-  enquiryMessage += `\nGrand Total: ₹${grandTotal}`;
-
-  const encodedMessage = encodeURIComponent(enquiryMessage);
-  const whatsappNumber = "919994376845";
-  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-  // ✅ Manual WhatsApp prompt (instead of auto redirect)
-  showWhatsappPrompt(whatsappURL, encodedMessage);
-
-  // ✅ Reset state and UI
-  cart = {};
-  addressData = null;
-  cartModal.classList.add("hidden");
-  resetUI();
-  addressForm.reset();
-  updateCartButton();
-});
-
-
-// Render cart summary table inside modal
-function renderCartSummary() {
-  if (Object.keys(cart).length === 0) {
-    cartSummary.innerHTML = "<p>Your cart is empty.</p>";
-    return;
-  }
-
-  let html = `<table>
-    <thead>
-      <tr><th>Product</th><th>Unit</th><th>Price (₹)</th><th>Qty</th><th>Total (₹)</th></tr>
-    </thead>
-    <tbody>`;
-
-  let grandTotal = 0;
-  for (const key in cart) {
-    const item = cart[key];
-    const total = item.price * item.quantity;
-    grandTotal += total;
-
-    html += `
-      <tr>
-        <td>${item.name}</td>
-        <td>${item.unit}</td>
-        <td>${item.price}</td>
-        <td>${item.quantity}</td>
-        <td>${total}</td>
-      </tr>`;
-  }
-
-  html += `
-    </tbody>
-    <tfoot>
-      <tr>
-        <th colspan="4" style="text-align:right;">Grand Total:</th>
-        <th>₹${grandTotal}</th>
-      </tr>
-    </tfoot>
-  </table>`;
-
-  cartSummary.innerHTML = html;
-}
-
-// Reset UI after enquiry submission
+// Reset UI (cart, etc.)
 function resetUI() {
-  document.querySelectorAll("input[type='checkbox']").forEach(chk => chk.checked = false);
-  document.querySelectorAll("input[type='number']").forEach(qty => {
-    qty.style.display = "none";
-    qty.value = "1";
-  });
-  document.querySelectorAll(".product-table").forEach(table => (table.style.display = "none"));
-  document.querySelectorAll(".category-header .toggle-icon").forEach(icon => (icon.textContent = "+"));
-
-  // Remove Add Address button if present
-  const addAddressBtn = document.getElementById("add-address-btn");
-  if (addAddressBtn) addAddressBtn.remove();
-
-  // Hide confirm enquiry button until address is added next time
+  updateCartButton();
+  cartModal.classList.add("hidden");
+  addressModal.classList.add("hidden");
   confirmEnquiryBtn.style.display = "none";
-}
-
-function showWhatsappPrompt(url, encodedMessage) {
-  const wrapper = document.createElement("div");
-  wrapper.style.border = "1px solid #ccc";
-  wrapper.style.padding = "1rem";
-  wrapper.style.margin = "1rem 0";
-  wrapper.style.borderRadius = "8px";
-  wrapper.style.backgroundColor = "#f1f1f1";
-  wrapper.style.maxWidth = "500px";
-
-  wrapper.innerHTML = `
-    <h3>📩 Enquiry Ready</h3>
-    <p>Your enquiry message is ready to send via WhatsApp.</p>
-    <a href="${url}" target="_blank" style="display:inline-block;padding:10px 20px;background-color:#25D366;color:white;border:none;border-radius:5px;text-decoration:none;font-weight:bold;margin-top:10px;">💬 Open WhatsApp</a>
-    <br><br>
-    <button id="copy-message-btn" style="padding: 8px 14px; background: #ddd; border: 1px solid #aaa; border-radius: 5px; cursor: pointer;">📋 Copy Message</button>
-    <p style="margin-top: 0.5rem; font-size: 0.9rem;">If WhatsApp doesn't open, you can paste the copied message manually in your chat.</p>
-  `;
-
-  // Append to modal or body
-  cartModal.appendChild(wrapper);
-
-  document.getElementById("copy-message-btn").addEventListener("click", () => {
-    navigator.clipboard.writeText(decodeURIComponent(encodedMessage));
-    alert("Message copied. You can paste it in WhatsApp manually.");
-  });
+  const addAddressBtn = document.getElementById("add-address-btn");
+  if (addAddressBtn) addAddressBtn.style.display = "none";
 }
