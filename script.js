@@ -4,10 +4,13 @@ const cartModal = document.getElementById("cart-modal");
 const cartSummary = document.getElementById("cart-summary");
 const closeCartBtn = document.getElementById("close-cart-btn");
 const confirmEnquiryBtn = document.getElementById("confirm-enquiry-btn");
-const addressForm = document.getElementById("address-form");
 
+const addressForm = document.getElementById("address-form");
+const addressModal = document.getElementById("address-modal");
+const cancelAddressBtn = document.getElementById("cancel-address-btn");
 
 let cart = {};
+let addressData = null;
 
 // Helper: update cart button state
 function updateCartButton() {
@@ -15,7 +18,35 @@ function updateCartButton() {
   viewCartBtn.disabled = !hasItems;
 }
 
-// Render all categories with only subcategory name and "Show All Products" button
+// Show Add Address button, hide Send Enquiry button
+function showAddAddressBtn() {
+  confirmEnquiryBtn.style.display = "none";
+  let addAddressBtn = document.getElementById("add-address-btn");
+  if (!addAddressBtn) {
+    addAddressBtn = document.createElement("button");
+    addAddressBtn.id = "add-address-btn";
+    addAddressBtn.textContent = "Add Address";
+    addAddressBtn.className = "primary";
+    addAddressBtn.style.marginLeft = "0.5rem";
+    confirmEnquiryBtn.parentNode.appendChild(addAddressBtn);
+
+    addAddressBtn.addEventListener("click", () => {
+      cartModal.classList.add("hidden");
+      addressModal.classList.remove("hidden");
+    });
+  } else {
+    addAddressBtn.style.display = "inline-block";
+  }
+}
+
+// Show Send Enquiry button, hide Add Address button
+function showConfirmEnquiryBtn() {
+  confirmEnquiryBtn.style.display = "inline-block";
+  const addAddressBtn = document.getElementById("add-address-btn");
+  if (addAddressBtn) addAddressBtn.style.display = "none";
+}
+
+// Render all categories and products
 productsData.forEach((cat, index) => {
   const categoryDiv = document.createElement("div");
   categoryDiv.className = "category";
@@ -122,10 +153,15 @@ productsData.forEach((cat, index) => {
   container.appendChild(categoryDiv);
 });
 
-// Show Cart modal with summary
+// Show Cart modal with summary and show Add Address button initially
 viewCartBtn.addEventListener("click", () => {
+  if (Object.keys(cart).length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
   renderCartSummary();
   cartModal.classList.remove("hidden");
+  showAddAddressBtn();
 });
 
 // Close Cart modal
@@ -133,20 +169,21 @@ closeCartBtn.addEventListener("click", () => {
   cartModal.classList.add("hidden");
 });
 
-// Confirm enquiry
-confirmEnquiryBtn.addEventListener("click", () => {
-  if (Object.keys(cart).length === 0) {
-    alert("Cart is empty!");
-    return;
-  }
+// Cancel Address modal
+cancelAddressBtn.addEventListener("click", () => {
+  addressModal.classList.add("hidden");
+  cartModal.classList.remove("hidden");
+});
 
-  if (!addressForm.reportValidity()) {
-    alert("Please fill out your complete address information correctly.");
-    return;
-  }
+// Address form submit: save address data, close modal, show Send Enquiry button
+addressForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Validate form (HTML5 validation should handle this)
+  if (!addressForm.reportValidity()) return;
 
   const formData = new FormData(addressForm);
-  const userAddress = {
+  addressData = {
     name: formData.get("name").trim(),
     address: formData.get("address").trim(),
     city: formData.get("city").trim(),
@@ -154,9 +191,25 @@ confirmEnquiryBtn.addEventListener("click", () => {
     pincode: formData.get("pincode").trim(),
   };
 
-  // Build message string
-  let enquiryMessage = `Enquiry from: ${userAddress.name}\n`;
-  enquiryMessage += `Address: ${userAddress.address}, ${userAddress.city}, ${userAddress.state} - ${userAddress.pincode}\n\n`;
+  addressModal.classList.add("hidden");
+  cartModal.classList.remove("hidden");
+  showConfirmEnquiryBtn();
+});
+
+// Confirm enquiry button sends WhatsApp message with cart + address
+confirmEnquiryBtn.addEventListener("click", () => {
+  if (Object.keys(cart).length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+  if (!addressData) {
+    alert("Please add your address before sending enquiry.");
+    return;
+  }
+
+  // Build enquiry message
+  let enquiryMessage = `Enquiry from: ${addressData.name}\n`;
+  enquiryMessage += `Address: ${addressData.address}, ${addressData.city}, ${addressData.state} - ${addressData.pincode}\n\n`;
   enquiryMessage += `Products Enquired:\n`;
 
   let grandTotal = 0;
@@ -168,26 +221,25 @@ confirmEnquiryBtn.addEventListener("click", () => {
   }
   enquiryMessage += `\nGrand Total: ₹${grandTotal}`;
 
-  // Encode the message for URL
+  // Encode message for WhatsApp URL
   const encodedMessage = encodeURIComponent(enquiryMessage);
 
-  // WhatsApp number - use international format without plus sign, here for India +91 9994376845 -> 919994376845
+  // WhatsApp number (India) without '+'
   const whatsappNumber = "919994376845";
 
-  // WhatsApp URL
   const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-  // Open WhatsApp in new tab/window
+  // Open WhatsApp chat
   window.open(whatsappURL, "_blank");
 
-  // Reset everything
+  // Reset state and UI
   cart = {};
+  addressData = null;
   cartModal.classList.add("hidden");
   resetUI();
   addressForm.reset();
   updateCartButton();
 });
-
 
 // Render cart summary table inside modal
 function renderCartSummary() {
@@ -231,16 +283,20 @@ function renderCartSummary() {
   cartSummary.innerHTML = html;
 }
 
-// Reset all checkboxes and qty inputs after enquiry
+// Reset UI after enquiry submission
 function resetUI() {
-  // Uncheck all checkboxes and hide qty inputs, reset qty values
   document.querySelectorAll("input[type='checkbox']").forEach(chk => chk.checked = false);
   document.querySelectorAll("input[type='number']").forEach(qty => {
     qty.style.display = "none";
     qty.value = "1";
   });
-
-  // Hide all product tables and reset toggle icons to '+'
   document.querySelectorAll(".product-table").forEach(table => (table.style.display = "none"));
   document.querySelectorAll(".category-header .toggle-icon").forEach(icon => (icon.textContent = "+"));
+
+  // Remove Add Address button if present
+  const addAddressBtn = document.getElementById("add-address-btn");
+  if (addAddressBtn) addAddressBtn.remove();
+
+  // Hide confirm enquiry button until address is added next time
+  confirmEnquiryBtn.style.display = "none";
 }

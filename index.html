@@ -19,32 +19,6 @@
 
   <main id="product-container"></main>
 
-  <section id="address-section">
-    <h2>Your Address</h2>
-        <form id="address-form">
-            <div>
-            <label for="name">Name*</label><br />
-            <input type="text" id="name" name="name" required />
-            </div>
-            <div>
-            <label for="address">Address*</label><br />
-            <textarea id="address" name="address" rows="3" required></textarea>
-            </div>
-            <div>
-            <label for="city">City*</label><br />
-            <input type="text" id="city" name="city" required />
-            </div>
-            <div>
-            <label for="state">State*</label><br />
-            <input type="text" id="state" name="state" required />
-            </div>
-            <div>
-            <label for="pincode">Pincode*</label><br />
-            <input type="text" id="pincode" name="pincode" pattern="\d{6}" required title="6 digit pincode" />
-            </div>
-        </form>
-    </section>
-
   <div id="bottom-bar">
     <button id="view-cart-btn" disabled>View Cart &amp; Send Enquiry</button>
   </div>
@@ -60,6 +34,39 @@
       </div>
     </div>
   </div>
+
+ <!-- Address Modal -->
+<div id="address-modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Enter Your Address</h2>
+    <form id="address-form">
+      <label>
+        Name:<br />
+        <input type="text" id="name" name="name" required style="width: 100%;" />
+      </label><br /><br />
+      <label>
+        Address:<br />
+        <textarea id="address" name="address" required rows="3" style="width: 100%;"></textarea>
+      </label><br /><br />
+      <label>
+        City:<br />
+        <input type="text" id="city" name="city" required style="width: 100%;" />
+      </label><br /><br />
+      <label>
+        State:<br />
+        <input type="text" id="state" name="state" required style="width: 100%;" />
+      </label><br /><br />
+      <label>
+        Pincode:<br />
+        <input type="text" id="pincode" name="pincode" required pattern="\d{5,6}" title="Enter valid pincode" style="width: 100%;" />
+      </label><br /><br />
+      <div class="modal-actions">
+        <button type="button" id="cancel-address-btn">Cancel</button>
+        <button type="submit" class="primary">Save Address</button>
+      </div>
+    </form>
+  </div>
+</div>
 
   <script src="products.js"></script>
   <script src="script.js"></script>
