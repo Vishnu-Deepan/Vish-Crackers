@@ -88,7 +88,7 @@
         style="display: none;" 
         onsubmit="return false;">  <!-- Prevent default form submission -->
       <input type="text" name="entry.452695221" id="name-input" />
-            <input type="text" name="entry.1846109305" id="phone-input" />
+      <input type="text" name="entry.1846109305" id="phone-input" />
       <input type="text" name="entry.944025910" id="address-input" />
       <input type="text" name="entry.2048288889" id="products-input" />
       <input type="text" name="entry.174664773" id="quantities-input" />
@@ -106,6 +106,7 @@
     function collectAndSubmitData() {
         // Gather form data from the webpage
         const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
         const products = Object.keys(cart).map(item => `${item} (${cart[item].quantity})`).join(', ');
         const quantities = Object.keys(cart).map(item => cart[item].quantity).join(', ');
@@ -113,13 +114,14 @@
         const total = Object.keys(cart).reduce((sum, item) => sum + cart[item].price * cart[item].quantity, 0);
 
         // Check if the required fields are filled out
-        if (!name || !address || !products || !quantities || !prices || !total) {
+        if (!name || !phone || !address || !products || !quantities || !prices || !total) {
             alert("Please ensure all fields are filled out before submitting.");
             return;
         }
 
         // Populate the hidden form fields with the gathered data
         document.getElementById('name-input').value = name;
+        document.getElementById('phone-input').value =  phone;
         document.getElementById('address-input').value = address;
         document.getElementById('products-input').value = products;
         document.getElementById('quantities-input').value = quantities;
