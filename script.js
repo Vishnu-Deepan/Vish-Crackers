@@ -187,6 +187,7 @@ addressForm.addEventListener("submit", (e) => {
   addressData = {
     name: formData.get("name").trim(),
     address: formData.get("address").trim(),
+    phone: formData.get("phone").trim(),
     city: formData.get("city").trim(),
     state: formData.get("state").trim(),
     pincode: formData.get("pincode").trim(),
@@ -210,6 +211,7 @@ confirmEnquiryBtn.addEventListener("click", () => {
 
   // Build the PDF content
   let pdfContent = `Enquiry from: ${addressData.name}\n`;
+  pdfContent += `Phone: ${addressData.address}\n`;
   pdfContent += `Address: ${addressData.address}, ${addressData.city}, ${addressData.state} - ${addressData.pincode}\n\n`;
   pdfContent += `Products Enquired:\n`;
 
