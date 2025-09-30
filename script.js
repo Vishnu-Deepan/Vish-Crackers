@@ -45,7 +45,7 @@ function displayProducts(data) {
       productCard.classList.add('product-card');
 
       const productImage = document.createElement('img');
-      productImage.src = 'https://via.placeholder.com/300x200';
+      productImage.src = 'assets/placeholder.jpg';
       productCard.appendChild(productImage);
 
       const productContent = document.createElement('div');

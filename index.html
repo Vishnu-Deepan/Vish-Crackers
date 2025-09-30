@@ -20,13 +20,13 @@
   <div class="container">
     <h1>Explore Our Fireworks Collection</h1>
 
-    <!-- Dropdown for Category Selection -->
+    <!-- Custom Dropdown for Category Selection -->
     <div class="category-filter">
-      <label for="category-select">Select Category:</label>
-      <select id="category-select">
-        <option value="all">All Categories</option>
-        <!-- Categories will be dynamically added here -->
-      </select>
+      <label for="category-dropdown">Select Category:</label>
+      <div class="custom-dropdown" id="category-dropdown">
+        <span class="dropdown-selected">All Categories</span>
+        <ul class="dropdown-list" id="dropdown-list"></ul>
+      </div>
     </div>
 
     <div id="products"></div>
@@ -37,9 +37,8 @@
   </footer>
 
   <script src="products.js"></script>
-
   <script>
-    // Function to render products
+    // Function to display products based on selected category
     function displayProducts(selectedCategory = 'all') {
       const productsContainer = document.getElementById('products');
       productsContainer.innerHTML = '';  // Clear previous content
@@ -76,12 +75,12 @@
 
             const productPrice = document.createElement('div');
             productPrice.classList.add('product-price');
-            productPrice.textContent = `$${item.price.toFixed(2)}`;
+            productPrice.textContent = `₹${item.price.toFixed(2)}`;
             productContent.appendChild(productPrice);
 
             const originalPrice = document.createElement('div');
             originalPrice.classList.add('product-original-price');
-            originalPrice.textContent = `$${item.originalPrice.toFixed(2)}`;
+            originalPrice.textContent = `₹${item.originalPrice.toFixed(2)}`;
             productContent.appendChild(originalPrice);
 
             const productUnit = document.createElement('div');
@@ -99,30 +98,58 @@
       });
     }
 
-    // Event listener for category dropdown change
-    document.getElementById('category-select').addEventListener('change', function() {
-      const selectedCategory = this.value;
-      displayProducts(selectedCategory);
-    });
-
-    // Initialize dropdown and display all products
-    window.onload = function() {
-      populateCategoryDropdown();
-      displayProducts(); // Show all products initially
-    };
-
-    // Function to populate the category dropdown dynamically
+    // Event listener for category selection in dropdown
     function populateCategoryDropdown() {
-      const categorySelect = document.getElementById('category-select');
-
-      // Add categories to the dropdown
+      const dropdownList = document.getElementById('dropdown-list');
       productsData.forEach(category => {
-        const option = document.createElement('option');
-        option.value = category.category;
-        option.textContent = category.category;
-        categorySelect.appendChild(option);
+        const listItem = document.createElement('li');
+        listItem.classList.add('dropdown-item');
+        listItem.dataset.value = category.category;
+
+        const image = document.createElement('img');
+        image.src = category.image || "assets/placeholder.jpg";
+        image.classList.add('dropdown-item-image');
+
+        const text = document.createElement('span');
+        text.classList.add('dropdown-item-text');
+        text.textContent = category.category;
+
+        listItem.appendChild(image);
+        listItem.appendChild(text);
+
+        listItem.addEventListener('click', function () {
+          document.querySelector('.dropdown-selected').textContent = category.category;
+          displayProducts(category.category);
+          toggleDropdown();
+        });
+
+        dropdownList.appendChild(listItem);
       });
     }
+
+    // Toggle the dropdown visibility
+    function toggleDropdown() {
+      const dropdownList = document.getElementById('dropdown-list');
+      dropdownList.classList.toggle('show');
+    }
+
+    // Event listener for dropdown toggle
+    document.getElementById('category-dropdown').addEventListener('click', toggleDropdown);
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', function (event) {
+      if (!event.target.closest('.custom-dropdown')) {
+        const dropdownList = document.getElementById('dropdown-list');
+        dropdownList.classList.remove('show');
+      }
+    });
+
+    // Initialize dropdown and show all products by default
+    window.onload = function () {
+      populateCategoryDropdown();
+      displayProducts();
+    };
   </script>
+
 </body>
 </html>
