@@ -1,55 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for better typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vish Fireworks Store</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-    <!-- Main Content -->
-    <main id="main-container">
-        <!-- Categories and Products will be injected here dynamically -->
-        <div id="product-container"></div>
-    </main>
+  <header>
+    <div class="logo">Vish Fireworks Store</div>
+    <div class="nav">
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </div>
+  </header>
 
-    <!-- View Cart Button (Always visible at bottom-right) -->
-    <button id="view-cart-btn" class="primary-btn">View Cart</button>
+  <div class="container">
+    <h1>Explore Our Fireworks Collection</h1>
 
-    <!-- Cart Modal (Initially hidden) -->
-    <div id="cart-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3>Your Cart</h3>
-            <div id="cart-summary"></div>
-            <button id="close-cart-btn" class="primary-btn">Close</button>
-        </div>
+    <!-- Dropdown for Category Selection -->
+    <div class="category-filter">
+      <label for="category-select">Select Category:</label>
+      <select id="category-select">
+        <option value="all">All Categories</option>
+        <!-- Categories will be dynamically added here -->
+      </select>
     </div>
 
-    <!-- Address Modal (Initially hidden) -->
-    <div id="address-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3>Enter Address</h3>
-            <form id="address-form">
-                <input type="text" name="name" placeholder="Full Name" required>
-                <input type="text" name="address" placeholder="Address" required>
-                <input type="text" name="phone" placeholder="Phone" required>
-                <input type="text" name="city" placeholder="City" required>
-                <input type="text" name="state" placeholder="State" required>
-                <input type="text" name="pincode" placeholder="Pincode" required>
-                <button type="submit" class="primary-btn">Submit</button>
-                <button type="button" id="cancel-address-btn" class="primary-btn">Cancel</button>
-            </form>
-        </div>
-    </div>
+    <div id="products"></div>
+  </div>
 
-    <script src="products.js"></script> <!-- Products data -->
-    <script src="script.js"></script> <!-- Main Script -->
+  <footer>
+    <p>© 2025 Fireworks Shop. All Rights Reserved.</p>
+  </footer>
 
+  <script src="products.js"></script>
+
+  <script>
+    // Function to render products
+    function displayProducts(selectedCategory = 'all') {
+      const productsContainer = document.getElementById('products');
+      productsContainer.innerHTML = '';  // Clear previous content
+
+      // Loop through categories and display products
+      productsData.forEach(category => {
+        if (selectedCategory === 'all' || selectedCategory === category.category) {
+          const categorySection = document.createElement('section');
+
+          const categoryTitle = document.createElement('h2');
+          categoryTitle.classList.add('category-title');
+          categoryTitle.textContent = category.category;
+          categorySection.appendChild(categoryTitle);
+
+          const productGrid = document.createElement('div');
+          productGrid.classList.add('product-grid');
+
+          // Loop through items in the selected category
+          category.items.forEach(item => {
+            const productCard = document.createElement('div');
+            productCard.classList.add('product-card');
+
+            const productImage = document.createElement('img');
+            productImage.src = item.image || 'assets/placeholder.jpg';
+            productCard.appendChild(productImage);
+
+            const productContent = document.createElement('div');
+            productContent.classList.add('product-card-content');
+
+            const productName = document.createElement('div');
+            productName.classList.add('product-name');
+            productName.textContent = item.name;
+            productContent.appendChild(productName);
+
+            const productPrice = document.createElement('div');
+            productPrice.classList.add('product-price');
+            productPrice.textContent = `$${item.price.toFixed(2)}`;
+            productContent.appendChild(productPrice);
+
+            const originalPrice = document.createElement('div');
+            originalPrice.classList.add('product-original-price');
+            originalPrice.textContent = `$${item.originalPrice.toFixed(2)}`;
+            productContent.appendChild(originalPrice);
+
+            const productUnit = document.createElement('div');
+            productUnit.classList.add('product-unit');
+            productUnit.textContent = item.unit;
+            productContent.appendChild(productUnit);
+
+            productCard.appendChild(productContent);
+            productGrid.appendChild(productCard);
+          });
+
+          categorySection.appendChild(productGrid);
+          productsContainer.appendChild(categorySection);
+        }
+      });
+    }
+
+    // Event listener for category dropdown change
+    document.getElementById('category-select').addEventListener('change', function() {
+      const selectedCategory = this.value;
+      displayProducts(selectedCategory);
+    });
+
+    // Initialize dropdown and display all products
+    window.onload = function() {
+      populateCategoryDropdown();
+      displayProducts(); // Show all products initially
+    };
+
+    // Function to populate the category dropdown dynamically
+    function populateCategoryDropdown() {
+      const categorySelect = document.getElementById('category-select');
+
+      // Add categories to the dropdown
+      productsData.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.category;
+        option.textContent = category.category;
+        categorySelect.appendChild(option);
+      });
+    }
+  </script>
 </body>
-
 </html>

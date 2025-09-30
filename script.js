@@ -1,162 +1,113 @@
-// Select DOM elements
-const container = document.getElementById("product-container");
-const viewCartBtn = document.getElementById("view-cart-btn");
-const cartModal = document.getElementById("cart-modal");
-const cartSummary = document.getElementById("cart-summary");
-const closeCartBtn = document.getElementById("close-cart-btn");
+let currentPage = 1;
+const itemsPerPage = 10;
+let selectedCategory = 'all'; // Default to show all categories
 
-// Cart object to store selected products
-let cart = {};
+// Get reference to the category select element
+const categorySelect = document.getElementById('category-select');
 
-// Helper to update the cart button state
-function updateCartButton() {
-    const hasItems = Object.keys(cart).length > 0;
-    viewCartBtn.disabled = !hasItems;
+function populateCategories(data) {
+  // Populate the category dropdown dynamically based on the categories in productsData
+  const categories = data.map(item => item.category);
+  const uniqueCategories = [...new Set(categories), 'all']; // Add 'all' option to view all categories
+  uniqueCategories.forEach(category => {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category;
+    categorySelect.appendChild(option);
+  });
 }
 
-// Render categories and products dynamically from `products.js`
-productsData.forEach((cat, index) => {
-    const categoryDiv = document.createElement("div");
-    categoryDiv.className = "category";
+function displayProducts(data) {
+  const productsContainer = document.getElementById('products');
+  productsContainer.innerHTML = '';
 
-    // Category Header with toggle dropdown-like icon
-    const header = document.createElement("div");
-    header.className = "category-header";
-    header.innerHTML = `
-        <img src="path/to/icon.png" alt="Category Icon">
-        <span class="title">${cat.category}</span>
-        <span class="toggle-icon">▼</span>
-    `;
+  let filteredData = data;
+  
+  if (selectedCategory !== 'all') {
+    // Filter products based on the selected category
+    filteredData = data.filter(category => category.category === selectedCategory);
+  }
 
-    // Product Table (hidden initially)
-    const table = document.createElement("table");
-    table.className = "product-table";
-    table.style.display = "none";
-    table.innerHTML = `
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Unit</th>
-                <th>Price (₹)</th>
-                <th>Add</th>
-                <th>Qty</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    `;
-
-    const tbody = table.querySelector("tbody");
-
-    // Add products for this category
-    cat.items.forEach((item) => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>${item.name}</td>
-            <td>${item.unit}</td>
-            <td class="price">${item.price}</td>
-            <td><input type="checkbox" id="chk-${index}-${item.id}" title="Add to cart"></td>
-            <td><input type="number" class="quantity-input" min="1" value="1" style="display: none;"></td>
-        `;
-
-        // Add event listeners for checkbox and quantity
-        const checkbox = row.querySelector("input[type='checkbox']");
-        const qtyInput = row.querySelector("input[type='number']");
-        
-        checkbox.addEventListener("change", () => {
-            if (checkbox.checked) {
-                qtyInput.style.display = "inline-block";
-                cart[item.name] = { ...item, quantity: parseInt(qtyInput.value, 10) };
-            } else {
-                qtyInput.style.display = "none";
-                delete cart[item.name];
-            }
-            updateCartButton();
-        });
-
-        qtyInput.addEventListener("input", () => {
-            if (checkbox.checked) {
-                let val = parseInt(qtyInput.value, 10);
-                if (isNaN(val) || val < 1) {
-                    val = 1;
-                    qtyInput.value = val;
-                }
-                cart[item.name].quantity = val;
-            }
-        });
-
-        tbody.appendChild(row);
-    });
-
-    // Toggle visibility of product table
-    header.addEventListener("click", () => {
-        if (table.style.display === "none") {
-            table.style.display = "table";
-            header.querySelector(".toggle-icon").textContent = "▲";
-        } else {
-            table.style.display = "none";
-            header.querySelector(".toggle-icon").textContent = "▼";
-        }
-    });
-
-    // Append category and table
-    categoryDiv.appendChild(header);
-    categoryDiv.appendChild(table);
-    container.appendChild(categoryDiv);
-});
-
-// Handle Cart Modal visibility
-viewCartBtn.addEventListener("click", () => {
-    if (Object.keys(cart).length === 0) {
-        alert("Cart is empty!");
-        return;
-    }
-    renderCartSummary();
-    cartModal.classList.remove("hidden");
-});
-
-closeCartBtn.addEventListener("click", () => {
-    cartModal.classList.add("hidden");
-});
-
-// Render cart summary in modal
-function renderCartSummary() {
-    if (Object.keys(cart).length === 0) {
-        cartSummary.innerHTML = "<p>Your cart is empty.</p>";
-        return;
-    }
-
-    let html = `<table>
-        <thead>
-            <tr><th>Product</th><th>Unit</th><th>Price (₹)</th><th>Qty</th><th>Total (₹)</th></tr>
-        </thead>
-        <tbody>`;
+  filteredData.forEach(category => {
+    const categorySection = document.createElement('section');
     
-    let grandTotal = 0;
-    for (const key in cart) {
-        const item = cart[key];
-        const total = item.price * item.quantity;
-        grandTotal += total;
+    const categoryTitle = document.createElement('h2');
+    categoryTitle.classList.add('category-title');
+    categoryTitle.textContent = category.category;
+    categorySection.appendChild(categoryTitle);
 
-        html += `
-            <tr>
-                <td>${item.name}</td>
-                <td>${item.unit}</td>
-                <td>${item.price}</td>
-                <td>${item.quantity}</td>
-                <td>${total}</td>
-            </tr>`;
-    }
+    const productGrid = document.createElement('div');
+    productGrid.classList.add('product-grid');
+    
+    // Slice the category's items to paginate them
+    category.items.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).forEach(item => {
+      const productCard = document.createElement('div');
+      productCard.classList.add('product-card');
 
-    html += `
-        </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="4" style="text-align:right;">Grand Total:</th>
-                <th>₹${grandTotal}</th>
-            </tr>
-        </tfoot>
-    </table>`;
+      const productImage = document.createElement('img');
+      productImage.src = 'https://via.placeholder.com/300x200';
+      productCard.appendChild(productImage);
 
-    cartSummary.innerHTML = html;
+      const productContent = document.createElement('div');
+      productContent.classList.add('product-card-content');
+
+      const productName = document.createElement('div');
+      productName.classList.add('product-name');
+      productName.textContent = item.name;
+      productContent.appendChild(productName);
+
+      const productPrice = document.createElement('div');
+      productPrice.classList.add('product-price');
+      productPrice.textContent = `$${item.price.toFixed(2)}`;
+      productContent.appendChild(productPrice);
+
+      const originalPrice = document.createElement('div');
+      originalPrice.classList.add('product-original-price');
+      originalPrice.textContent = `$${item.originalPrice.toFixed(2)}`;
+      productContent.appendChild(originalPrice);
+
+      const productUnit = document.createElement('div');
+      productUnit.classList.add('product-unit');
+      productUnit.textContent = item.unit;
+      productContent.appendChild(productUnit);
+
+      productCard.appendChild(productContent);
+      productGrid.appendChild(productCard);
+    });
+
+    categorySection.appendChild(productGrid);
+    productsContainer.appendChild(categorySection);
+  });
+
+  generatePagination(filteredData);
 }
+
+function generatePagination(data) {
+  const pagination = document.getElementById('pagination');
+  const totalItems = data.reduce((acc, category) => acc + category.items.length, 0);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+  pagination.innerHTML = '';
+  
+  for (let i = 1; i <= totalPages; i++) {
+    const pageButton = document.createElement('button');
+    pageButton.textContent = i;
+    pageButton.addEventListener('click', () => {
+      currentPage = i;
+      displayProducts(data);
+    });
+    pagination.appendChild(pageButton);
+  }
+}
+
+categorySelect.addEventListener('change', (e) => {
+  selectedCategory = e.target.value;
+  currentPage = 1; // Reset to first page when category changes
+  displayProducts(productsData);
+});
+
+window.onload = function() {
+  populateCategories(productsData); // Populate category filter
+  displayProducts(productsData);
+};
+
