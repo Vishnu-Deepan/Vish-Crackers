@@ -73,7 +73,7 @@ Single Sound
 62	Snow Fall (new arrival)	95	1 box 350,
 63	Tin Shower (5 Varieties)	99	1 box 380,
 64	Dallas Shower R&G - 5pcs	99	1 box  370,
-65	Bambaram with  smoke (New Arrival)	120	1 box ,
+65	Bambaram with  smoke (New Arrival)	120	1 box 250,
 66	Rang Lava R&G (20 secs)	120	1 box 270,
 67	Colour Smoke - 3 Colours - Superb Timing	200	1 box 410,
 68	Butterfly	95	1 box 190,
@@ -103,7 +103,7 @@ Single Sound
 90	Toy Fountain 4 varities  - New Arrival- Limited!! (2pcs)	265	1 box 530,
 91	Purple Dove  - purple colour New Arrival	99	1 box 210,
 92	Alice I Cindrella	120	1 box 210,
-93	Pink Panther (Limited)	190	l  box 380,
+93	Pink Panther (Limited)	190	 1 box 380,
 94	Lemon Tree 4 Varieties 2 step function New Arrival!!	150	1 box 310,
 95	Smoke Gun (Crakling function with smoke )  - 5 Pieces	240	1 box 529,
 96	Raavan / Naragasura - Limited	285	1 box 490,
@@ -142,7 +142,7 @@ Single Sound
 	Special Edition Mega Pipes-New Arrival (Limited!!)		
 125	Anadhas 6" 3 Varities Awesome Display	1450	1 piece 2150,
 126	Spnka 4" Gambling series (3 in 1) - 4 Varities -3 pcs pack	1350	1 box 2250,
-127	Bindu's spl 6" 4 Varities wonderful display	1450	1 box 2150,,
+127	Bindu's spl 6" 4 Varities wonderful display	1450	1 box 2150,
 128	Sri Krishna 5" Elite series (Pink Panther ,Lone wolf)	1350	1 piece 2250,
 	Dual and Triple Sky Attractions		
 129	Double Ball Premium ( 5 Varieties)	450	l  piece 1100,
@@ -180,7 +180,7 @@ Single Sound
 	Setouts -Mega Continuous  Sky Display		
 157	2 inch Setout - 30 shots	3600	1 box 5200,
 158  2.75 inch setout - 9 shots (Power Pack) 2350 1 box 4900,
-159  3.5 inch setout - 20 shots (Champions night) 5999 1 box" 11500,
+159  3.5 inch setout - 20 shots (Champions night) 5999 1 box 11500,
 160  10x10 - Sizzling (100 Rider shots - New Arrival) 3600 1 box 8100,
 161  10x10 - Thunder Lights (100 shots - New Arrival) 4800 1 box 9990,
      Sparklers
