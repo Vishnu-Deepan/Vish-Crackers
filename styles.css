@@ -36,6 +36,7 @@
 
 
  header .logo {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
    font-size: 1.5rem;
    font-weight: bold;
  }
@@ -59,7 +60,7 @@
 
  /* Product List Section */
 .category-title {
-
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,7 +73,7 @@
   position: sticky; /* Makes it stick when scrolling */
   top: 58px; /* Fixed position at 10px from the top of the viewport */
   z-index: 10; /* Makes sure it stays above other elements */
-  background-color: #fff; /* Optional: background color to cover any content under it */
+   background-color: rgba(234, 245, 252, 0.852);
 }
 
 
@@ -235,7 +236,7 @@
 
  /* Custom Dropdown Styles */
  .custom-dropdown {
-  z-index: 10000;
+  z-index: 100;
    width: 100%;
    position: relative;
    display: inline-block;
