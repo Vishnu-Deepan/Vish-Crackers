@@ -9,19 +9,63 @@
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">Vish Fireworks Store</div>
-    <div class="cart" id="cart-icon">
-        <i class="fas fa-shopping-cart cart-icon" style="font-size: 24px;"></i>
-        <span id="cart-count">0</span>
-    </div>
+ <!-- Header (modified) -->
+<header>
+  <div class="logo">
+    Vish Fireworks Store
+    <span id="header-toggle" class="header-arrow">&#9660;</span> <!-- ▼ down arrow -->
+  </div>
+  <div class="cart" id="cart-icon">
+    <i class="fas fa-shopping-cart cart-icon" style="font-size: 24px;"></i>
+    <span id="cart-count">0</span>
+  </div>
 </header>
+
+<!-- Push-down section -->
+<div id="header-section" class="header-section">
+  <div class="section-content">
+
+    <h2>Welcome to <span class="highlight">Vish Fireworks Store</span></h2>
+
+    <div class="info-card">
+      <h3><i class="fas fa-info-circle"></i> Important Info</h3>
+      <ul>
+        <li><strong>Address:</strong> Near Hayagrivas School, Vembakottai Road, Sivakasi – 626168</li>
+        <li><strong>Contact:</strong> Vishnu P – 9994376845</li>
+        <li><span class="highlight">Order Early:</span> High demand during Diwali may cause delays</li>
+        <li><span class="highlight">Safe & Reliable:</span> All firecrackers tested for safety</li>
+        <li><span class="highlight">Payment:</span> Secure confirmation via WhatsApp</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3><i class="fas fa-cart-plus"></i> Ordering Made Easy</h3>
+      <p>As online sales are legally restricted, please <span class="highlight">add items to your cart</span> and submit an <span class="highlight">inquiry</span>. We will contact you within <span class="highlight">24 hours</span> to confirm your order via WhatsApp.</p>
+    </div>
+
+    <div class="info-card">
+      <h3><i class="fas fa-truck"></i> Delivery Information</h3>
+      <p>Delivery across India with charges from <span class="highlight">₹250–₹1500</span>. Place orders early (<span class="highlight">before Oct 5, 2025</span>) to avoid delays during the Diwali rush.</p>
+    </div>
+
+    <div class="info-card">
+      <h3><i class="fas fa-star"></i> Why Choose Us?</h3>
+      <ul>
+        <li><span class="highlight">Competitive Prices:</span> Directly from Sivakasi</li>
+        <li><span class="highlight">Customer Support:</span> Ready to assist anytime</li>
+        <li><span class="highlight">Reliable Delivery:</span> Safe & timely across India</li>
+      </ul>
+    </div>
+
+    <p class="closing-note">Let us help you <span class="highlight">light up your celebrations</span>! Contact us today to place your order and enjoy a <span class="highlight">memorable festival season</span>.</p>
+    
+  </div>
+</div>
+
+
 
   <!-- Main -->
   <div class="container">
-    <h1>Explore Our Fireworks Collection</h1>
-
     <!-- Category Filter -->
     <div class="category-filter">
       <label for="category-dropdown">Select Category:</label>
@@ -37,7 +81,7 @@
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 Fireworks Shop. All Rights Reserved.</p>
+    <p>Vish Fireworks Store - All India delivery from Sivakasi</p>
   </footer>
 
   <script src="products.js"></script>

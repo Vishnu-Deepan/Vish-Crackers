@@ -1,6 +1,21 @@
-console.log("script.js loaded!");
 
 let currentCategory = 'all';
+
+// Smooth toggle with arrow rotation
+const headerToggle = document.getElementById("header-toggle");
+const headerSection = document.getElementById("header-section");
+
+headerToggle.addEventListener("click", () => {
+  if (headerSection.style.display === "none" || headerSection.style.display === "") {
+    headerSection.style.display = "block";
+    headerToggle.innerHTML = "&#9650;"; // ▲ up arrow
+  } else {
+    headerSection.style.display = "none";
+    headerToggle.innerHTML = "&#9660;"; // ▼ down arrow
+  }
+});
+
+
 
 /* ========== Cart Helpers ========== */
 function getCartData() {
