@@ -1,3 +1,4 @@
+
 const productsData = [{
   'category': 'Single Sound',
   'items': [{
@@ -1385,3 +1386,5 @@ const productsData = [{
     'unit': '1 box'
   }]
 }];
+
+console.log("products.js loaded!", productsData);
