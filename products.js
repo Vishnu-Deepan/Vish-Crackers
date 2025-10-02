@@ -109,6 +109,7 @@ const productsData = [{
     'originalPrice': 250,
     'price': 175,
     'unit': '1 Box',
+    'image': 'assets/13.jpg'
   },
   {
     'id': 14,
@@ -116,6 +117,7 @@ const productsData = [{
     'originalPrice': 220,
     'price': 150,
     'unit': '1 Box',
+    'image': 'assets/14.jpeg'
   },
   {
     'id': 15,
@@ -248,6 +250,7 @@ const productsData = [{
     'originalPrice': 700,
     'price': 399,
     'unit': '1 Box',
+    'image': 'assets/300.jpg'
   },
   {
     'id': 31,
@@ -299,21 +302,24 @@ const productsData = [{
     'name': 'Rocket Bomb',
     'originalPrice': 250,
     'price': 75,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/37.jpg'
   },
   {
     'id': 38,
     'name': 'Predator or Mission to Mars (New Arrival) Limited',
     'originalPrice': 530,
     'price': 245,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/38.jpg'
   },
   {
     'id': 39,
     'name': 'Sky Whistling Rocket',
     'originalPrice': 450,
     'price': 185,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/39.jpg'
   }]
 },
 {
@@ -361,7 +367,8 @@ const productsData = [{
     'name': 'Magic Show or Money Heist - 2 pieces',
     'originalPrice': 500,
     'price': 245,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/45.jpg'
   }]
 },
 {
@@ -378,21 +385,24 @@ const productsData = [{
     'name': 'Ground Chakkars Special',
     'originalPrice': 210,
     'price': 85,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/47.jpg'
   },
   {
     'id': 48,
     'name': 'Ground Chakkars Deluxe',
     'originalPrice': 280,
     'price': 170,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/48.jpg'
   },
   {
     'id': 49,
     'name': 'Tinto 50-50 (Red and Green) Wheel',
     'originalPrice': 340,
     'price': 225,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/49.jpg'
   },
   {
     'id': 50,
@@ -409,35 +419,40 @@ const productsData = [{
     'name': 'Flower Pot Big',
     'originalPrice': 260,
     'price': 70,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/51.jpg'
   },
   {
     'id': 52,
     'name': 'Flower Pot Special',
     'originalPrice': 300,
     'price': 85,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/52.jpg'
   },
   {
     'id': 53,
     'name': 'Flower Pot Ashoka',
     'originalPrice': 320,
     'price': 120,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/53.jpg'
   },
   {
     'id': 54,
     'name': 'Colour Koti',
     'originalPrice': 530,
     'price': 199,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/54.jpg'
   },
   {
     'id': 55,
     'name': 'Colour Koti Deluxe',
     'originalPrice': 640,
     'price': 299,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/55.png'
   },
   {
     'id': 56,
@@ -455,7 +470,8 @@ const productsData = [{
     'name': 'Kids Tri Colour',
     'originalPrice': 320,
     'price': 199,
-    'unit': '1 Box'
+    'unit': '1 Box',
+    'image': 'assets/57.jpg'
   },
   {
     'id': 58,
@@ -586,7 +602,8 @@ const productsData = [{
     'name': 'Mini Siren - 5 pieces',
     'originalPrice': 440,
     'price': 155,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/74.jpg'
   },
   {
     'id': 75,
@@ -759,7 +776,8 @@ const productsData = [{
     'name': 'Raavan / Naragasura - Limited',
     'originalPrice': 490,
     'price': 285,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/96.jpg'
   },
   {
     'id': 97,
@@ -774,7 +792,8 @@ const productsData = [{
     'name': 'Trixx - area full of red (New Arrival)',
     'originalPrice': 380,
     'price': 210,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/98.jpg'
   },
   {
     'id': 99,
@@ -796,8 +815,7 @@ const productsData = [{
     'name': 'Oscar butterfly - (Limited) 3 in 1',
     'originalPrice': 780,
     'price': 495,
-    'unit': '1 box',
-    'image': 'assets/101.jpg'
+    'unit': '1 box'
   },
   {
     'id': 102,
@@ -842,7 +860,8 @@ const productsData = [{
     'name': 'Belly Dance Peacock - 4 varieties',
     'originalPrice': 540,
     'price': 195,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/106.jpg'
   },
   {
     'id': 107,
@@ -924,21 +943,24 @@ const productsData = [{
     'name': '2" Fancy (5 Varieties)',
     'originalPrice': 210,
     'price': 115,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/116.jpg'
   },
   {
     'id': 117,
     'name': '3 in 1 Fancy - 3 piece pack (6 Varieties) premium',
     'originalPrice': 580,
     'price': 285,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/117.jpg'
   },
   {
     'id': 118,
     'name': '3.5" Fancy Premium (7 Varieties)',
     'originalPrice': 880,
     'price': 299,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/118.jpg'
   },
   {
     'id': 119,
@@ -968,7 +990,8 @@ const productsData = [{
     'name': '5" Fancy Elite (6 Varieties)',
     'originalPrice': 1300,
     'price': 650,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/122.jpg'
   },
   {
     'id': 123,
@@ -1091,14 +1114,16 @@ const productsData = [{
     'name': '30 Shots Premium',
     'originalPrice': 980,
     'price': 425,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/137.jpg'
   },
   {
     'id': 138,
     'name': '30 Shots Elite',
     'originalPrice': 980,
     'price': 499,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/138.jpg'
   }]
 },
 {
@@ -1108,7 +1133,8 @@ const productsData = [{
     'name': '30 Peacock Dance (30 Mines Attraction)',
     'originalPrice': 990,
     'price': 450,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/139.jpg'
   },
   {
     'id': 140,
@@ -1123,28 +1149,32 @@ const productsData = [{
     'name': '60 Shots Premium',
     'originalPrice': 1700,
     'price': 835,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/141.jpg'
   },
   {
     'id': 142,
     'name': '60 Shots Elite',
     'originalPrice': 1800,
     'price': 999,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/142.jpg'
   },
   {
     'id': 143,
     'name': '120 Shots Premium',
     'originalPrice': 3500,
     'price': 1750,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/143.jpg'
   },
   {
     'id': 144,
     'name': '120 Shots Elite',
     'originalPrice': 3900,
     'price': 1999,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/144.jpg'
   },
   {
     'id': 145,
@@ -1158,7 +1188,8 @@ const productsData = [{
     'name': '240 Shots Elite',
     'originalPrice': 8300,
     'price': 3999,
-    'unit': '1 piece'
+    'unit': '1 piece',
+    'image': 'assets/146.jpg'
   },
   {
     'id': 147,
@@ -1293,91 +1324,111 @@ const productsData = [{
     'name': '10cm electric',
     'originalPrice': 52,
     'price': 23,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/162.jpg' 
   },
   {
     'id': 163,
     'name': '10 cm Red',
     'originalPrice': 65,
     'price': 30,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/163.jpg'
+ 
   },
   {
     'id': 164,
     'name': '10 cm Green',
     'originalPrice': 65,
     'price': 30,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/164.jpg'
+ 
   },
   {
     'id': 165,
     'name': '15 cm Electric',
     'originalPrice': 120,
     'price': 55,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/165.jpg'
+ 
   },
   {
     'id': 166,
     'name': '15 cm Red',
     'originalPrice': 120,
     'price': 55,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/166.jpg'
+
   },
   {
     'id': 167,
     'name': '15 cm Green',
     'originalPrice': 120,
     'price': 55,
-    'unit': '1 box'
+    'unit': '1 box',
+    'image': 'assets/167.jpg'
+ 
   },
   {
     'id': 168,
     'name': '30 cm Electric',
     'originalPrice': 110,
     'price': 50,
-    'unit': '1 box - 5 piece'
+    'unit': '1 box - 5 piece',
+    'image': 'assets/168.jpg'
   },
   {
     'id': 169,
     'name': '30 cm Red',
     'originalPrice': 120,
     'price': 55,
-    'unit': '1 box - 5 piece'
+    'unit': '1 box - 5 piece',
+    'image': 'assets/169.jpg'
   },
   {
     'id': 170,
     'name': '30 cm Green',
     'originalPrice': 120,
     'price': 55,
-    'unit': '1 box - 5 piece'
+    'unit': '1 box - 5 piece',
+    'image': 'assets/170.jpg'
   },
   {
     'id': 171,
     'name': '50 cm Electric - Tube',
     'originalPrice': 450,
     'price': 175,
-    'unit': '1 box - 5 piece'
+    'unit': '1 box - 5 piece',
+    'image': 'assets/171.jpg'
+ 
   },
   {
     'id': 172,
     'name': '50 cm Super Mix - Tube (4 in 1)',
     'originalPrice': 520,
     'price': 245,
-    'unit': '1 box - 5 piece'
+    'unit': '1 box - 5 piece',
+    'image': 'assets/172.jpg'
+ 
   },
   {
     'id': 173,
     'name': '15 cm Orange (New Arrival Limited)',
     'originalPrice': 155,
     'price': 85,
-    'unit': '1 box - 10 piece'
+    'unit': '1 box - 10 piece',
+    'image': 'assets/173.jpg'
   },
   {
     'id': 174,
     'name': '15 cm Pink (New Arrival Limited)',
     'originalPrice': 155,
     'price': 85,
-    'unit': '1 box - 10 piece'
+    'unit': '1 box - 10 piece',
+    'image': 'assets/174.png' 
   },
   {
     'id': 175,

@@ -1,66 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vish Fireworks Store</title>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
- <!-- Header (modified) -->
-<header>
-  <div class="logo">
-    Vish Fireworks Store
-    <span id="header-toggle" class="header-arrow">&#9660;</span> <!-- ▼ down arrow -->
+  <!-- Header (modified) -->
+  <header>
+    <div class="logo">
+      Vish Fireworks Store
+      <span id="header-toggle" class="header-arrow">&#9660;</span> <!-- ▼ down arrow -->
+    </div>
+    <div class="cart" id="cart-icon">
+      <i class="fas fa-shopping-cart cart-icon" style="font-size: 24px;"></i>
+      <span id="cart-count">0</span>
+    </div>
+  </header>
+
+  <!-- Push-down section -->
+  <div id="header-section" class="header-section">
+    <div class="section-content">
+
+      <h2>Welcome to <span class="highlight">Vish Fireworks Store</span></h2>
+
+      <div class="info-card">
+        <h3><i class="fas fa-info-circle"></i> Important Info</h3>
+        <ul>
+          <li><strong>Address:</strong> Near Hayagrivas School, Vembakottai Road, Sivakasi – 626189</li>
+          <li><strong>Contact:</strong> Vishnu P – 9994376845</li>
+          <li><span class="highlight">Order Early:</span> High demand during Diwali may cause delays</li>
+          <li><span class="highlight">Safe & Reliable:</span> All firecrackers tested for safety</li>
+          <li><span class="highlight">Payment:</span> Secure confirmation via WhatsApp</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-cart-plus"></i> Ordering Made Easy</h3>
+        <p>As online sales are legally restricted, please <span class="highlight">add items to your cart</span> and
+          submit an <span class="highlight">inquiry</span>. We will contact you within <span class="highlight">24
+            hours</span> to confirm your order via WhatsApp.</p>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-truck"></i> Delivery Information</h3>
+        <p>Delivery across India with charges from <span class="highlight">₹250–₹1500</span>. Place orders early (<span
+            class="highlight">before Oct 5, 2025</span>) to avoid delays during the Diwali rush.</p>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-star"></i> Why Choose Us?</h3>
+        <ul>
+          <li><span class="highlight">Competitive Prices:</span> Directly from Sivakasi</li>
+          <li><span class="highlight">Customer Support:</span> Ready to assist anytime</li>
+          <li><span class="highlight">Reliable Delivery:</span> Safe & timely across India</li>
+        </ul>
+      </div>
+
+      <p class="closing-note">The images shown are for <span class="highlight">illustration purposes only </span>and may
+        <span class="highlight">not be an exact representation </span>of the product.</p>
+
+    </div>
   </div>
-  <div class="cart" id="cart-icon">
-    <i class="fas fa-shopping-cart cart-icon" style="font-size: 24px;"></i>
-    <span id="cart-count">0</span>
-  </div>
-</header>
-
-<!-- Push-down section -->
-<div id="header-section" class="header-section">
-  <div class="section-content">
-
-    <h2>Welcome to <span class="highlight">Vish Fireworks Store</span></h2>
-
-    <div class="info-card">
-      <h3><i class="fas fa-info-circle"></i> Important Info</h3>
-      <ul>
-        <li><strong>Address:</strong> Near Hayagrivas School, Vembakottai Road, Sivakasi – 626168</li>
-        <li><strong>Contact:</strong> Vishnu P – 9994376845</li>
-        <li><span class="highlight">Order Early:</span> High demand during Diwali may cause delays</li>
-        <li><span class="highlight">Safe & Reliable:</span> All firecrackers tested for safety</li>
-        <li><span class="highlight">Payment:</span> Secure confirmation via WhatsApp</li>
-      </ul>
-    </div>
-
-    <div class="info-card">
-      <h3><i class="fas fa-cart-plus"></i> Ordering Made Easy</h3>
-      <p>As online sales are legally restricted, please <span class="highlight">add items to your cart</span> and submit an <span class="highlight">inquiry</span>. We will contact you within <span class="highlight">24 hours</span> to confirm your order via WhatsApp.</p>
-    </div>
-
-    <div class="info-card">
-      <h3><i class="fas fa-truck"></i> Delivery Information</h3>
-      <p>Delivery across India with charges from <span class="highlight">₹250–₹1500</span>. Place orders early (<span class="highlight">before Oct 5, 2025</span>) to avoid delays during the Diwali rush.</p>
-    </div>
-
-    <div class="info-card">
-      <h3><i class="fas fa-star"></i> Why Choose Us?</h3>
-      <ul>
-        <li><span class="highlight">Competitive Prices:</span> Directly from Sivakasi</li>
-        <li><span class="highlight">Customer Support:</span> Ready to assist anytime</li>
-        <li><span class="highlight">Reliable Delivery:</span> Safe & timely across India</li>
-      </ul>
-    </div>
-
-    <p class="closing-note">The images shown are for <span class="highlight">illustration purposes only </span>and may  <span class="highlight">not be an exact representation </span>of the product.</p>
-    
-  </div>
-</div>
 
 
 
@@ -85,7 +91,7 @@
   </footer>
 
   <script src="products.js"></script>
-<script src="script.js" defer></script>
+  <script src="script.js" defer></script>
 
   <!-- Cart Overlay -->
   <div id="cart-overlay" class="cart-overlay">
@@ -110,20 +116,24 @@
       <h3 id="modal-title">Confirm Inquiry</h3>
 
       <div class="legal-note">
-We require this to securely send you the final product list and payment details. We will contact you within 24 hours to finalize your order.
-      <label for="phone-number">Enter your phone number</label>
-      <div class="input-row" style="margin-top:8px;">
-        <input id="phone-number" class="phone-input" type="tel" placeholder="e.g. 9XXXXXXXXX" />
-        <button id="inquire-btn" class="inquire-btn">Inquire</button>
-      </div>
+        We require this to securely send you the final product list and payment details. We will contact you within 24
+        hours to finalize your order.
 
-      <p id="modal-msg" style="margin-top:8px;color:#666;font-size:0.95rem;"></p>
+        <label for="phone-number">Enter your phone number</label>
+        <div class="input-row" style="margin-top:8px;">
+          <input id="phone-number" class="phone-input" type="tel" placeholder="e.g. 9XXXXXXXXX" />
+          <button id="inquire-btn" class="inquire-btn">Inquire</button>
+        </div>
 
-      <div style="text-align:right;margin-top:12px;">
-        <button id="close-modal" style="background:none;border:none;color:#e74c3c;font-weight:700;cursor:pointer;">Close</button>
+        <p id="modal-msg" style="margin-top:8px;color:#666;font-size:0.95rem;"></p>
+
+        <div style="text-align:right;margin-top:12px;">
+          <button id="close-modal"
+            style="background:none;border:none;color:#e74c3c;font-weight:700;cursor:pointer;">Close</button>
+        </div>
       </div>
     </div>
-  </div>
 
 </body>
+
 </html>
